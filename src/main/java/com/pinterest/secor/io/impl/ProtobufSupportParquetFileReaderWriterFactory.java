@@ -11,7 +11,6 @@ import org.apache.parquet.proto.ProtoParquetReader;
 import org.apache.parquet.proto.ProtoWriteSupport;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.hadoop.ParquetWriter;
-import org.apache.parquet.proto.ProtoParquetWriter;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;
@@ -95,12 +94,12 @@ public class ProtobufSupportParquetFileReaderWriterFactory implements FileReader
                     .fromCompressionCodec(codec != null ? codec.getClass() : null);
             topic = logFilePath.getTopic();
             Configuration conf = new Configuration();
-			ProtoWriteSupport.setWriteSpecsCompliant(conf, true);
-			
-			ProtoWriteSupport<Message> support = new ProtoWriteSupport<Message>(protobufUtil.getMessageClass(topic));
-			
-			writer = new ParquetWriter(path, support, codecName,blockSize,pageSize,ParquetWriter.DEFAULT_BLOCK_SIZE,
-			enableDictionary,validating, ParquetWriter.DEFAULT_WRITER_VERSION,conf);
+            ProtoWriteSupport.setWriteSpecsCompliant(conf, true);
+
+            ProtoWriteSupport < Message > support = new ProtoWriteSupport < Message > (protobufUtil.getMessageClass(topic));
+
+            writer = new ParquetWriter(path, support, codecName, blockSize, pageSize, ParquetWriter.DEFAULT_BLOCK_SIZE,
+                enableDictionary, validating, ParquetWriter.DEFAULT_WRITER_VERSION, conf);
         }
 
         @Override
