@@ -11,7 +11,7 @@ import org.apache.parquet.proto.ProtoParquetReader;
 import org.apache.parquet.proto.ProtoWriteSupport;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.hadoop.ParquetWriter;
-import org.apache.parquet.column.ParquetProperties.WriterVersion;
+import org.apache.parquet.proto.ProtoParquetWriter;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;
@@ -100,7 +100,7 @@ public class ProtobufSupportParquetFileReaderWriterFactory implements FileReader
 			ProtoWriteSupport<Message> support = new ProtoWriteSupport<Message>(protobufUtil.getMessageClass(topic));
 			
 			writer = new ParquetWriter(path, support, codecName,blockSize,pageSize,ParquetWriter.DEFAULT_BLOCK_SIZE,
-			enableDictionary,validating,WriterVersion.fromString("v1"),conf);
+			enableDictionary,validating, ParquetWriter.DEFAULT_WRITER_VERSION,conf);
         }
 
         @Override
