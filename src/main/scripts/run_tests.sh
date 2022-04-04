@@ -200,7 +200,7 @@ run_finalizer() {
 
 create_topic() {
     if [[ "$MVN_PROFILE" == kafka-2.0.0 ]];then
-      run_command "docker-compose exec kafka kafka-topics --zookeeper zookeeper:2181 --create --replication-factor 1 --partitions 2 --topic test"
+      run_command "docker-compose exec -T kafka kafka-topics --zookeeper zookeeper:2181 --create --replication-factor 1 --partitions 2 --topic test"
     else
       run_command "${BASE_DIR}/run_kafka_class.sh kafka.admin.TopicCommand --create --zookeeper \
           localhost:2181 --replication-factor 1 --partitions 2 --topic test > \
