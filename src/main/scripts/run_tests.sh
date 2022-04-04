@@ -61,7 +61,7 @@ S3_FILESYSTEMS=${S3_FILESYSTEMS:-s3n}
 
 # The minimum wait time is 10 seconds plus delta.  Secor is configured to upload files older than
 # 10 seconds and we need to make sure that everything ends up on s3 before starting verification.
-WAIT_TIME=${SECOR_WAIT_TIME:-30}
+WAIT_TIME=${SECOR_WAIT_TIME:-50}
 BASE_DIR=$(dirname $0)
 CONF_DIR=${BASE_DIR}/..
 
@@ -200,7 +200,7 @@ run_finalizer() {
 
 create_topic() {
     if [[ "$MVN_PROFILE" == kafka-2.0.0 ]];then
-      run_command "docker-compose exec kafka kafka-topics --zookeeper zookeeper:2181 --create --replication-factor 1 --partitions 2 --topic test"
+      run_command "docker-compose exec -T kafka kafka-topics --zookeeper zookeeper:2181 --create --replication-factor 1 --partitions 2 --topic test"
     else
       run_command "${BASE_DIR}/run_kafka_class.sh kafka.admin.TopicCommand --create --zookeeper \
           localhost:2181 --replication-factor 1 --partitions 2 --topic test > \
