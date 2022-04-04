@@ -14,6 +14,9 @@ jobs:
       matrix:
         mvn_profiles: [
           'kafka-2.0.0',
+          'kafka-1.0.0',
+          'kafka-0.10.2.0',
+          'kafka-0.8.2.1',
         ]
     steps:
       - uses: actions/checkout@v2
