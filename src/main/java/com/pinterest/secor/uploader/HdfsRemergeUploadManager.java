@@ -3,6 +3,7 @@ package com.pinterest.secor.uploader;
 import com.pinterest.secor.common.LogFilePath;
 import com.pinterest.secor.common.SecorConfig;
 import com.pinterest.secor.util.FileUtil;
+import org.apache.hadoop.ipc.RemoteException;
 import org.apache.hadoop.ipc.StandbyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,10 +51,18 @@ public class HdfsRemergeUploadManager extends UploadManager {
                         LOG.info("Uploading file {} to {}", localLogFilename, destLogFilename);
                         FileUtil.moveToCloud(localLogFilename, destLogFilename);
                         return;
-                    } catch (StandbyException e) {
-                        LOG.warn("Upload failed due name node failover", e);
-                        continue;
-                    } catch (IOException e) {
+                    }
+                    catch (RemoteException e) {
+                        final IOException wrappedError = e.unwrapRemoteException();
+
+                        if (wrappedError instanceof StandbyException) {
+                            LOG.warn("Upload failed due to name node failover", e);
+                            continue;
+                        }
+
+                        throw new RuntimeException(e);
+                    }
+                    catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
