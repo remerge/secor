@@ -66,7 +66,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>2.11.2</version>
+                <version>2.12.3</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -76,7 +76,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>2.11.2</version>
+                <version>2.12.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -127,7 +127,7 @@
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
-            <version>1.10.0</version>
+            <version>1.10.2</version>
         </dependency>
         <dependency>
             <groupId>com.github.remerge.parquet-mr</groupId>
@@ -137,22 +137,22 @@
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.13.0</version>
+            <version>3.18.2</version>
         </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java-util</artifactId>
-            <version>3.13.0</version>
+            <version>3.20.0</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-s3</artifactId>
-            <version>1.11.871</version>
+            <version>1.12.211</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-sts</artifactId>
-            <version>1.11.871</version>
+            <version>1.12.166</version>
         </dependency>
         <dependency>
             <groupId>net.java.dev.jets3t</groupId>
@@ -318,38 +318,38 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>24.1.1-jre</version>
+            <version>30.1.1-jre</version>
         </dependency>
         <dependency>
             <groupId>net.minidev</groupId>
             <artifactId>json-smart</artifactId>
-            <version>2.3</version>
+            <version>2.4.7</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.5.13</version>
+            <version>3.10.0</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito2</artifactId>
-            <version>2.0.7</version>
+            <version>2.0.9</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>2.0.7</version>
+            <version>2.0.9</version>
         </dependency>
         <dependency>
             <groupId>org.msgpack</groupId>
             <artifactId>jackson-dataformat-msgpack</artifactId>
-            <version>0.8.21</version>
+            <version>0.8.24</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.fasterxml.jackson.core</groupId>
@@ -364,37 +364,37 @@
         <dependency>
             <groupId>com.datadoghq</groupId>
             <artifactId>java-dogstatsd-client</artifactId>
-            <version>2.10.3</version>
+            <version>2.11.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-storage</artifactId>
-            <version>1.113.1</version>
+            <version>1.117.1</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>azure-storage</artifactId>
-            <version>8.6.5</version>
+            <version>8.6.6</version>
         </dependency>
         <dependency>
             <groupId>org.apache.orc</groupId>
             <artifactId>orc-core</artifactId>
-            <version>1.6.4</version>
+            <version>1.6.9</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-jmx</artifactId>
-            <version>1.5.5</version>
+            <version>1.7.0</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-statsd</artifactId>
-            <version>1.5.5</version>
+            <version>1.7.0</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>1.5.5</version>
+            <version>1.7.0</version>
         </dependency>
     </dependencies>
 
@@ -573,7 +573,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>1.20</version>
+                <version>2.0.0</version>
                 <executions>
                     <execution>
                         <id>download-licenses</id>
@@ -645,6 +645,7 @@
                 <version>2.22.2</version>
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>
+                	<forkCount>1.5C</forkCount>
                 </configuration>
             </plugin>
         </plugins>
@@ -704,7 +705,7 @@
                     <plugin>
                       <groupId>org.apache.maven.plugins</groupId>
                       <artifactId>maven-gpg-plugin</artifactId>
-                      <version>1.6</version>
+                      <version>3.0.1</version>
                       <executions>
                           <execution>
                               <id>sign-artifacts</id>
@@ -722,7 +723,7 @@
                     <dependency>
                         <groupId>com.fasterxml.jackson.module</groupId>
                         <artifactId>jackson-module-scala_2.11</artifactId>
-                        <version>2.11.2</version>
+                        <version>2.11.3</version>
                     </dependency>
                 </dependencies>
             </dependencyManagement>
@@ -764,7 +765,7 @@
                 <dependency>
                     <groupId>org.apache.kafka</groupId>
                     <artifactId>kafka_2.10</artifactId>
-                    <version>0.10.2.2</version>
+                    <version>0.10.2.2-cp1</version>
                     <exclusions>
                         <exclusion>
                             <groupId>org.slf4j</groupId>
@@ -804,7 +805,7 @@
                     <dependency>
                         <groupId>com.fasterxml.jackson.module</groupId>
                         <artifactId>jackson-module-scala_2.11</artifactId>
-                        <version>2.11.2</version>
+                        <version>2.11.3</version>
                     </dependency>
                 </dependencies>
             </dependencyManagement>
@@ -831,7 +832,7 @@
                     <dependency>
                         <groupId>com.fasterxml.jackson.module</groupId>
                         <artifactId>jackson-module-scala_2.11</artifactId>
-                        <version>2.11.2</version>
+                        <version>2.11.3</version>
                     </dependency>
                 </dependencies>
             </dependencyManagement>
@@ -892,7 +893,7 @@
                     <dependency>
                         <groupId>com.fasterxml.jackson.module</groupId>
                         <artifactId>jackson-module-scala_2.10</artifactId>
-                        <version>2.11.2</version>
+                        <version>2.11.4</version>
                     </dependency>
                 </dependencies>
             </dependencyManagement>
@@ -900,7 +901,7 @@
                 <dependency>
                     <groupId>org.apache.kafka</groupId>
                     <artifactId>kafka_2.10</artifactId>
-                    <version>0.10.2.2</version>
+                    <version>0.10.2.2-cp1</version>
                     <exclusions>
                         <exclusion>
                             <groupId>org.slf4j</groupId>
@@ -940,7 +941,7 @@
                     <dependency>
                         <groupId>com.fasterxml.jackson.module</groupId>
                         <artifactId>jackson-module-scala_2.10</artifactId>
-                        <version>2.11.2</version>
+                        <version>2.11.4</version>
                     </dependency>
                 </dependencies>
             </dependencyManagement>
@@ -948,7 +949,7 @@
                 <dependency>
                     <groupId>org.apache.kafka</groupId>
                     <artifactId>kafka_2.10</artifactId>
-                    <version>0.10.2.2</version>
+                    <version>0.10.2.2-cp1</version>
                     <exclusions>
                         <exclusion>
                             <groupId>org.slf4j</groupId>
