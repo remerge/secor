@@ -205,6 +205,16 @@ public class SecorConfig {
         return getString("kafka.new.consumer.partition.assignment.strategy.class");
     }
 
+    public String getNewConsumerHeartbeatIntervalMs() {
+        String heartbeatInterval = getString("kafka.new.consumer.heartbeat.interval.ms");
+        return Strings.isNullOrEmpty(heartbeatInterval) ? "3000" : heartbeatInterval;
+    }
+
+    public String getNewConsumerSessionTimeoutMs() {
+        String sessionTimeoutMs = getString("kafka.new.consumer.session.timeout.ms");
+        return Strings.isNullOrEmpty(sessionTimeoutMs) ? "10000" : sessionTimeoutMs;
+    }
+
     public String getPartitionAssignmentStrategy() {
         return getString("kafka.partition.assignment.strategy");
     }
