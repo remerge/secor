@@ -118,6 +118,8 @@ public class SecorKafkaMessageIterator implements KafkaMessageIterator, Rebalanc
         optionalConfig(config.getSslProvider(), conf -> props.put("ssl.provider", conf));
         optionalConfig(config.getSslTruststoreType(), conf -> props.put("ssl.truststore.type", conf));
         optionalConfig(config.getNewConsumerPartitionAssignmentStrategyClass(), conf -> props.put("partition.assignment.strategy", conf));
+        optionalConfig(config.getNewConsumerHeartbeatIntervalMs(), conf -> props.put("heartbeat.interval.ms", conf));
+        optionalConfig(config.getNewConsumerSessionTimeoutMs(), conf -> props.put("session.timeout.ms", conf));
 
         mZookeeperConnector = new ZookeeperConnector(config);
         mRecordsBatch = new ArrayDeque<>();
