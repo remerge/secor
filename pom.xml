@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pinterest</groupId>
@@ -39,11 +41,11 @@
     </scm>
 
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <parquet.version>1f0bfa8419</parquet.version>
+        <parquet.version>f437374</parquet.version>
 
         <!-- Whether we will using legazy old consumer kafka-legacy or new consumer kafka-2.0.0 -->
         <!-- Name of the directory below src/main/config that contains kafka-version-specific settings -->
@@ -137,12 +139,12 @@
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.21.1</version>
+            <version>4.31.1</version>
         </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java-util</artifactId>
-            <version>3.21.1</version>
+            <version>4.31.1</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -452,7 +454,8 @@
                                 <argument>--pretty=format:build_revision=%H</argument>
                                 <argument>-n1</argument>
                             </arguments>
-                            <outputFile>target/classes/com/pinterest/secor/common/monitoring/build.properties</outputFile>
+                            <outputFile
+                            >target/classes/com/pinterest/secor/common/monitoring/build.properties</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -492,36 +495,23 @@
 		    </plugin>
 			<!-- Protobuf source generator plug-in -->
 			<plugin>
-				<groupId>com.github.os72</groupId>
-				<artifactId>protoc-jar-maven-plugin</artifactId>
-				<version>3.11.4</version>
-				<executions>
-					<execution>
-						<id>protobuf-test-sources</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<protocVersion>3.1.0</protocVersion>
-							<includeDirectories>
-								<include>src/test/protobuf</include>
-							</includeDirectories>
-							<inputDirectories>
-								<include>src/test/protobuf</include>
-							</inputDirectories>
-                            <includeStdTypes>true</includeStdTypes>
-							<outputTargets>
-								<outputTarget>
-									<type>java</type>
-									<addSources>none</addSources>
-									<outputDirectory>target/generated-test-sources/protobuf/gen-java</outputDirectory>
-								</outputTarget>
-							</outputTargets>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+                <groupId>io.github.ascopes</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+
+                <configuration>
+                    <protocVersion>4.31.1</protocVersion>
+                    <outputDirectory
+                    >target/generated-test-sources/protobuf/gen-java</outputDirectory>
+                </configuration>
+
+                <executions>
+                    <execution>
+                    <goals>
+                        <goal>generate-test</goal>
+                    </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -652,176 +642,6 @@
 
     <profiles>
         <profile>
-            <id>release</id>
-            <!-- Matches kafka-2.0.0 , just this one includes gpg signing, javadoc etc -->
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.1</version>
-                        <configuration>
-                            <excludes>
-                                <exclude>com/pinterest/secor/timestamp/*</exclude>
-                                <exclude>com/pinterest/secor/reader/LegacyKafkaMessageIterator.java</exclude>
-                                <exclude>com/pinterest/secor/common/LegacyKafkaClient.java</exclude>
-                            </excludes>
-                            <testExcludes>
-                                <exclude>com/pinterest/secor/timestamp/*</exclude>
-                            </testExcludes>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.2.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                              </execution>
-                          </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.2.0</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                              </execution>
-                          </executions>
-                        <configuration>
-                            <source>8</source>
-                            <excludePackageNames>com.pinterest.secor.timestamp:com.pinterest.secor.reader:com.pinterest.secor.common:com.pinterest.secor.thrift</excludePackageNames>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-gpg-plugin</artifactId>
-                      <version>1.6</version>
-                      <executions>
-                          <execution>
-                              <id>sign-artifacts</id>
-                              <phase>verify</phase>
-                              <goals>
-                                  <goal>sign</goal>
-                              </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.fasterxml.jackson.module</groupId>
-                        <artifactId>jackson-module-scala_2.11</artifactId>
-                        <version>2.11.2</version>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.kafka</groupId>
-                    <artifactId>kafka-clients</artifactId>
-                    <version>2.3.1</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>ostrich_2.11</artifactId>
-                    <version>9.27.0</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>kafka-0.8.2.1</id>
-            <properties>
-                <kafka.properties>kafka-legacy</kafka.properties>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.1</version>
-                        <configuration>
-                            <excludes>
-                                <exclude>com/pinterest/secor/timestamp/Kafka10MessageTimestamp.java</exclude>
-                                <exclude>com/pinterest/secor/common/SecorKafkaClient.java</exclude>
-                                <exclude>com/pinterest/secor/reader/SecorKafkaMessageIterator.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.kafka</groupId>
-                    <artifactId>kafka_2.10</artifactId>
-                    <version>0.10.2.2</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-simple</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-                <dependency>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>ostrich_2.10</artifactId>
-                    <version>9.18.0</version>
-                 </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>kafka-1.0.0</id>
-            <properties>
-                <kafka.properties>kafka-legacy</kafka.properties>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.1</version>
-                        <configuration>
-                            <excludes>
-                                <exclude>com/pinterest/secor/common/SecorKafkaClient.java</exclude>
-                                <exclude>com/pinterest/secor/reader/SecorKafkaMessageIterator.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.fasterxml.jackson.module</groupId>
-                        <artifactId>jackson-module-scala_2.11</artifactId>
-                        <version>2.11.2</version>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.kafka</groupId>
-                    <artifactId>kafka_2.11</artifactId>
-                    <version>1.0.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>ostrich_2.11</artifactId>
-                    <version>9.27.0</version>
-              </dependency>
-            </dependencies>
-        </profile>
-        <profile>
             <id>kafka-2.0.0</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -844,7 +664,8 @@
                         <configuration>
                             <excludes>
                                 <exclude>com/pinterest/secor/timestamp/*</exclude>
-                                <exclude>com/pinterest/secor/reader/LegacyKafkaMessageIterator.java</exclude>
+                                <exclude
+                                >com/pinterest/secor/reader/LegacyKafkaMessageIterator.java</exclude>
                                 <exclude>com/pinterest/secor/common/LegacyKafkaClient.java</exclude>
                             </excludes>
                             <testExcludes>
@@ -864,102 +685,6 @@
                     <groupId>com.twitter</groupId>
                     <artifactId>ostrich_2.11</artifactId>
                     <version>9.27.0</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>kafka-0.10.2.0</id>
-            <properties>
-                <kafka.properties>kafka-legacy</kafka.properties>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.1</version>
-                        <configuration>
-                            <excludes>
-                                <exclude>com/pinterest/secor/common/SecorKafkaClient.java</exclude>
-                                <exclude>com/pinterest/secor/reader/SecorKafkaMessageIterator.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.fasterxml.jackson.module</groupId>
-                        <artifactId>jackson-module-scala_2.10</artifactId>
-                        <version>2.11.2</version>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.kafka</groupId>
-                    <artifactId>kafka_2.10</artifactId>
-                    <version>0.10.2.2</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-simple</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-                <dependency>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>ostrich_2.10</artifactId>
-                    <version>9.18.0</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>kafka-0.10.0.1</id>
-            <properties>
-                <kafka.properties>kafka-legacy</kafka.properties>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.1</version>
-                        <configuration>
-                            <excludes>
-                                <exclude>com/pinterest/secor/common/SecorKafkaClient.java</exclude>
-                                <exclude>com/pinterest/secor/reader/SecorKafkaMessageIterator.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.fasterxml.jackson.module</groupId>
-                        <artifactId>jackson-module-scala_2.10</artifactId>
-                        <version>2.11.2</version>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.kafka</groupId>
-                    <artifactId>kafka_2.10</artifactId>
-                    <version>0.10.2.2</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-simple</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-                <dependency>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>ostrich_2.10</artifactId>
-                    <version>9.18.0</version>
                 </dependency>
             </dependencies>
         </profile>
