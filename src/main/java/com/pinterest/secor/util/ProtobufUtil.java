@@ -155,7 +155,7 @@ public class ProtobufUtil {
     public Message decodeJsonMessage(String topic, byte[] payload) throws InvalidProtocolBufferException {
         try {
             Method builderGetter = allTopics ? messageClassForAll.getDeclaredMethod("newBuilder") : messageClassByTopic.get(topic).getDeclaredMethod("newBuilder");
-            com.google.protobuf.GeneratedMessageV3.Builder builder = (com.google.protobuf.GeneratedMessageV3.Builder) builderGetter.invoke(null);
+            com.google.protobuf.GeneratedMessage.Builder builder = (com.google.protobuf.GeneratedMessage.Builder) builderGetter.invoke(null);
             jsonParser.merge(new InputStreamReader(new ByteArrayInputStream(payload)), builder);
             return builder.build();
         } catch (InvalidProtocolBufferException e){
