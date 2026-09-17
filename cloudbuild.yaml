@@ -1,5 +1,5 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gsutil'
+  - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: bash
     args: ['ci/cloudbuild/gcp-dependencies']
     volumes:
@@ -44,7 +44,7 @@ steps:
       - "us.gcr.io/${PROJECT_ID}/secor:latest"
       - "."
 
-  - name: 'gcr.io/cloud-builders/gsutil'
+  - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: bash
     args: ['ci/cloudbuild/gcp-save-dependencies']
     volumes:
