@@ -6,7 +6,7 @@
 #
 # Usage as a step:
 #
-#  - name: 'gcr.io/cloud-builders/gsutil'
+#  - name: 'gcr.io/cloud-builders/gcloud'
 #    entrypoint: bash
 #    args: ['ci/cloudbuild/gcp-dependencies']
 #    volumes:
@@ -25,7 +25,7 @@ REPO_NAME=${REPO_NAME:-${_REPO_NAME:-unknown}}
 BRANCH_NAME=${BRANCH_NAME:-${_BRANCH_NAME:-unknown}}
 M2_LOCAL_REPOSITORY=${_M2_LOCAL_REPOSITORY:-/usr/share/maven/ref/repository}
 
-gsutil cp -r "gs://${_CACHE_BUCKET}/${REPO_NAME}/${BRANCH_NAME}/m2.tar" /tmp/m2.tar || exit 0
+gcloud storage cp "gs://${_CACHE_BUCKET}/${REPO_NAME}/${BRANCH_NAME}/m2.tar" /tmp/m2.tar || exit 0
 
 mkdir -p "${M2_LOCAL_REPOSITORY}/"
 tar --extract --file /tmp/m2.tar -C "${M2_LOCAL_REPOSITORY}"

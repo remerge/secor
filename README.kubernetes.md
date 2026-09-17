@@ -21,7 +21,7 @@ gcloud beta iam service-accounts keys create --iam-account "secor-service@demo.i
 # Log bucket
 
 ```bash
-gsutil mb gs://logs-secor-demo
+gcloud storage buckets create gs://logs-secor-demo
 ```
 
 ## Grant access
@@ -31,14 +31,14 @@ gcloud projects add-iam-policy-binding demo --member serviceAccount:secor-servic
 ```
 
 ```bash
-gsutil iam ch serviceAccount:secor-service@demo.iam.gserviceaccount.com:objectViewer gs://logs-secor-demo
-gsutil iam ch serviceAccount:secor-service@demo.iam.gserviceaccount.com:objectCreator gs://logs-secor-demo
+gcloud storage buckets add-iam-policy-binding gs://logs-secor-demo --member=serviceAccount:secor-service@demo.iam.gserviceaccount.com --role=roles/storage.objectViewer
+gcloud storage buckets add-iam-policy-binding gs://logs-secor-demo --member=serviceAccount:secor-service@demo.iam.gserviceaccount.com --role=roles/storage.objectCreator
 ```
 
 You can view ACL by issuing:
 
 ```bash
-gsutil iam get gs://logs-secor-demo
+gcloud storage buckets get-iam-policy gs://logs-secor-demo
 ```
 
 # Secrets
